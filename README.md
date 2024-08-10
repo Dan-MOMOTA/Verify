@@ -1,2 +1,2 @@
 # Vertify
-My vertify experience
+The Path to Vertify Learning --- Dan
