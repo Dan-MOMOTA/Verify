@@ -1,2 +1,2 @@
-# Vertify
-The Path to Vertify Learning --- Dan
+# Verify
+The Path to Verify Learning --- Dan
