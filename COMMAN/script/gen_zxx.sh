@@ -22,14 +22,18 @@ if [[ ! -d sim ]]; then
         mkdir -pv sim/log/cmp
         mkdir -pv sim/log/sim
     fi
-    
-
 
     if [[ ! -d sim/log ]]; then
         mkdir -pv sim/wave
         mkdir -pv sim/wave/fsdb
         mkdir -pv sim/wave/vpb
         mkdir -pv sim/wave/vcb
+    fi
+
+    if [[ ! -d sim/cov ]]; then
+        mkdir -pv sim/cov
+        mkdir -pv sim/cov/cfg
+        touch     sim/cov/cfg/cov.cfg
     fi
 fi
 
@@ -56,12 +60,12 @@ TOP_MODULE ?= test_top
 USER_DEF_CMP_OPTS += +define+NO_CHECK_TRF -debug_all
 USER_DEF_SIM_OPTS +=
 
-MODE    = \$(sehll getconf LONG_BIT)
+MODE    = \$(shell getconf LONG_BIT)
 ifeq (\${MODE}, 64)
     CMP_OPTS += -full64
 endif
 
-CPUS    = \$(shell nproc)
+CPUS      = \$(shell nproc)
 CMP_OPTS += -j\${CPUS}
 
 include cfg/vlg.mk
@@ -75,11 +79,15 @@ include cfg/cov.mk
 include cfg/log.mk
 include cfg/dump.mk
 
+.PHONY:all
+
+all:cmp sim
+
 cmp:
-    vcs -V -top \${TOP_MODULE} \${CMP_OPTS} \${USER_DEF_CMP_OPTS} -f \${TB_FILES}
+	vcs -V -top \${TOP_MODULE} \${CMP_OPTS} \${USER_DEF_CMP_OPTS} -f \${TB_FILES}
 
 sim:
-    simv \${SIM_OPTS} \${USER_DEF_SIM_OPTS}
+	./simv \${SIM_OPTS} \${USER_DEF_SIM_OPTS}
 	@echo \"\"
 	@echo \"+-----------------------------------------------------------------+\"
 	@echo \"+     Compile    log    :   ./log/cmp/cmp.log                     \"
@@ -89,32 +97,32 @@ sim:
 	@echo \"\"
 
 wav:
-    verdi -sv -ntb_opts uvm-\${UVM_VER} -ssf \${WAVE_DIR} -nologo -f \${TB_FILES} -ptrTitle \${TOP_MODULE}
+	verdi -sv -ntb_opts uvm-\${UVM_VER} -ssf \${WAVE_DIR} -nologo -f \${TB_FILES} -ptrTitle \${TOP_MODULE}
 
 cov_verdi:
-    verdi -cov -covdir \${COV_DIR}/\${TOP_MODULE}.vdb
-    #verdi -cov -covdir \${COV_DIR}/\${TOP_MODULE}.vdb -elfile xxx.el
+	verdi -cov -covdir \${COV_DIR}/\${TOP_MODULE}.vdb
+	#verdi -cov -covdir \${COV_DIR}/\${TOP_MODULE}.vdb -elfile xxx.el
 
 clr:
-    @find . -type f -name \"*.log\" -delete
-    @find . -type f -name \"*.fsdb\" -delete
-    @find . -type f -name \"*.vdb\" -delete
-    @rm -rf *simv*
-    @rm -rf *.daidir
-    @rm -rf csrc vc_hdrs.h ucli.key
-    @rm -rf vdCovLog
-    @rm -rf stack.info.*
-    @rm -rf urgReport
-    @rm -rf *.vpd
-    @rm -rf vcs.cfg
-    @rm -rf pli_learn.tab
-    @rm -rf novas.* verdiLog
-    @rm -rf DVEfiles
-    @rm -rf ova.report.disablelog
-    @rm -rf ova.report
-    @rm -rf xsim.dir
-    @rm -rf xvlog.pb
-    @rm -rf .__solver_cache__
+	@find . -type f -name \"*.log\" -delete
+	@find . -type f -name \"*.fsdb\" -delete
+	@find . -type f -name \"*.vdb\" -delete
+	@rm -rf *simv*
+	@rm -rf *.daidir
+	@rm -rf csrc vc_hdrs.h ucli.key
+	@rm -rf vdCovLog
+	@rm -rf stack.info.*
+	@rm -rf urgReport
+	@rm -rf *.vpd
+	@rm -rf vcs.cfg
+	@rm -rf pli_learn.tab
+	@rm -rf novas.* verdiLog
+	@rm -rf DVEfiles
+	@rm -rf ova.report.disablelog
+	@rm -rf ova.report
+	@rm -rf xsim.dir
+	@rm -rf xvlog.pb
+	@rm -rf .__solver_cache__
 	@echo \"\"
 	@echo \"+-------------------------------------------+\"
 	@echo \"+            clean done ... ...             \"
@@ -132,10 +140,10 @@ endif
 
 ifeq (\${V2K_EN},1)
     CMP_OPTS += +v2k
-endif" sim/cfg/vlg.mk
+endif" > sim/cfg/vlg.mk
 
 #assert.mk
-echo -e "SVA_EN         ?= 1
+echo -e "SVA_EN           ?= 1
 SVA_FAIL_MAX_NUM ?= 20
 SVA_SUCC_EN      ?= 1
 SVA_SUCC_MAX_NUM ?= 20
@@ -152,7 +160,7 @@ else
 endif" > sim/cfg/assert.mk
 
 #cov.mk
-echo -e "COV_EN         ?= 0
+echo -e "COV_EN          ?= 0
 CODE_COV_EN     ?= 0
 SVA_COV_EN      ?= 0
 COV_DIR          = cov
@@ -206,7 +214,7 @@ echo -e "#+tree
 #-file" > sim/cov/cfg/cov.cfg
 
 #dbg.mk
-echo -e "DBG_EN     ?= 1
+echo -e "DBG_EN      ?= 1
 GUI_EN      ?= 0
 
 ifeq (\${DBG_EN},1)
@@ -239,8 +247,8 @@ ifeq (\${MACROS_DEBUG_EN}, 1)
 endif" > sim/cfg/macros.mk
 
 #solver.mk
-echo -e "SEED_MANUAL     ?= 1
-seed        ?= \$(shell data \"+%m%d%H%M%S\")
+echo -e "SEED_MANUAL  ?= 1
+seed         ?= \$(shell date \"+%m%d%H%M%S\")
 
 ifeq (\${SEED_MANUAL},1)
     SIM_OPTS += ntb_random_seed=\${seed}
@@ -254,7 +262,7 @@ SIM_OPTS += solver_array_size_warn=10000" > sim/cfg/solver.mk
 echo -e "CMP_OPTS += -override_timescale=1ns/1ps" > sim/cfg/timescale.mk
 
 #uvm.mk
-echo -e "UVM_EN             ?= 1
+echo -e "UVM_EN                  ?= 1
 UVM_VER                 ?= 1.2
 DPI_HDL_API_EN          ?= 1
 UVM_REG_ADDR_WIDTH      ?= 64
@@ -340,7 +348,7 @@ endif
 endif" > sim/cfg/uvm.mk
 
 #dump.mk
-echo -e "WAVE_EN        ?= 1
+echo -e "WAVE_EN         ?= 1
 WAVE_FORMAT     ?= FSDB
 DUMP_STRENGTH   ?= 1
 DUMP_FORCE      ?= 1
