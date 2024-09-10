@@ -1,1 +1,0 @@
-../../../../COMMAN/script/gen_zxx.sh
