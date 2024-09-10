@@ -307,7 +307,7 @@ endif
     CMP_OPTS += +define+UVM_REG_ADDR_WIDTH=\${UVM_REG_ADDR_WIDTH}
     CMP_OPTS += +define+UVM_REG_DATA_WIDTH=\${UVM_REG_DATA_WIDTH}
 
-    SIM_OPTS += UVM_TESTNAME=\${tc} +UVM_VERBOSITY=\${vl} +UVM_MAX_QUIT_COUNT=\${qc} +UVM_TIMEOUT=\${to}
+    SIM_OPTS += +UVM_TESTNAME=\${tc} +UVM_VERBOSITY=\${vl} +UVM_MAX_QUIT_COUNT=\${qc} +UVM_TIMEOUT=\${to}
 
 ifeq (\${UVM_DBG}, 1)
 
