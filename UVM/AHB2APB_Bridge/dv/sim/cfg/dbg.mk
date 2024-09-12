@@ -6,7 +6,7 @@ ifeq (${DBG_EN},1)
 endif
 
 ifeq (${GUI_EN},1)
-    SIM_OPTS += -gui
+    SIM_OPTS += -gui=verdi &
 endif
 
 #endless loop debug

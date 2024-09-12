@@ -27,6 +27,7 @@ include cfg/assert.mk
 include cfg/cov.mk
 include cfg/log.mk
 include cfg/dump.mk
+include cfg/timescale.mk
 
 .PHONY:all
 

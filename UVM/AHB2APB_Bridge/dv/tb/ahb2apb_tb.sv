@@ -19,7 +19,7 @@
 //import apb_slv_pkg::*;
 
 module ahb2apb_tb();
-    parameter HCLK_PERIOD = 100ns;//10MHz
+    parameter HCLK_PERIOD = 100;//10MHz
 
     bit   [1:0]	tmp_var;
     logic [3:0]	HCLK_PCLK_RATIO;
@@ -132,7 +132,6 @@ module ahb2apb_tb();
                     .PSLVERR	( apb_if_i.pslverr		)
     );
 	
-	
     assign apb_if_i.paddr[31:16] = 16'b0;
 
     initial begin
@@ -167,7 +166,6 @@ module ahb2apb_tb();
     //----------------------------------------------
     // covergroups
     // ---------------------------------------------
-
     covergroup cg_hclk_pclk_ratio();
         option.per_instance = 1;
         option.name = "cg_hclk_pclk_ratio";
@@ -194,16 +192,18 @@ module ahb2apb_tb();
         //cg_tmp_var_ratio_i.sample();
     end
 
-    initial begin
-        string name;
-        /*if($test$plusargs("WAV_DUMP")) begin*/
-            if($value$plusargs("tc_name=%s",name)) begin
-                $fsdbDumpfile({name,"fsdb"});
-                $fsdbDumpvars(0,ahb2apb_tb);
-                $fsdbDumpMDA();
-                $fsdbDumpSVA();
-            end
-        /*end*/
-    end
+    /*
+     *initial begin
+     *    string name;
+     *    [>if($test$plusargs("WAV_DUMP")) begin<]
+     *        if($value$plusargs("tc_name=%s",name)) begin
+     *            $fsdbDumpfile({name,"fsdb"});
+     *            $fsdbDumpvars(0,ahb2apb_tb);
+     *            $fsdbDumpMDA();
+     *            $fsdbDumpSVA();
+     *        end
+     *    [>end<]
+     *end
+     */
 
 endmodule

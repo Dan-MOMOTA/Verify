@@ -12,7 +12,7 @@ if [[ ! -d sim ]]; then
         touch     sim/cfg/lint.mk
         touch     sim/cfg/macros.mk
         touch     sim/cfg/solver.mk
-        touch     sim/cfg/uvm.cfg
+        touch     sim/cfg/uvm.mk
         touch     sim/cfg/timescale.mk
         touch     sim/cfg/log.mk
     fi
@@ -81,6 +81,7 @@ include cfg/lint.mk
 include cfg/dbg.mk
 include cfg/solver.mk
 include cfg/uvm.mk
+include cfg/timescale.mk
 include cfg/assert.mk
 include cfg/cov.mk
 include cfg/log.mk
