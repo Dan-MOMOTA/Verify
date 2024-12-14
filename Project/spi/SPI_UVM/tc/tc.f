@@ -1,0 +1,12 @@
+../tc/apb_cfg_sequence.sv
+../tc/apb_wr_data_sequence.sv
+../tc/spi_wr_sequence.sv
+../tc/tc_sanity.sv
+../tc/tc_spi_wr.sv
+../tc/hw_reset_sequence.sv
+../tc/tc_hw_reset.sv
+../tc/spi_rdata_sequence.sv
+../tc/apb_rd_data_sequence.sv
+../tc/virtual_sequencer.sv
+../tc/spi_rd_sequence.sv
+../tc/tc_spi_rd.sv

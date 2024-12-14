@@ -1,0 +1,15 @@
+../ver/pkg.sv
+../ver/plus.sv
+../ver/drink_in_interface.sv
+../ver/drink_out_interface.sv
+../ver/drink_rx_transaction.sv
+../ver/drink_tx_transaction.sv
+../ver/drink_rx_sequencer.sv
+../ver/drink_rx_driver.sv
+../ver/drink_rx_monitor.sv
+../ver/drink_tx_monitor.sv
+../ver/drink_rx_agent.sv
+../ver/drink_tx_agent.sv
+../ver/drink_rm.sv
+../ver/drink_scoreboard.sv
+../ver/drink_env.sv
