@@ -1,0 +1,12 @@
+../src/alu.sv
+../src/controller.sv
+../src/dcr.sv
+../src/decoder.sv
+../src/dispatch.sv
+../src/fetcher.sv
+../src/lsu.sv
+../src/pc.sv
+../src/registers.sv
+../src/scheduler.sv
+../src/core.sv
+../src/gpu.sv
