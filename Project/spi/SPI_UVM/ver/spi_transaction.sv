@@ -22,7 +22,7 @@ class spi_transaction extends uvm_sequence_item;
     `uvm_object_utils_end
 
     constraint data_len_c {
-        spi.data.size() == data_len;
+        spi_data.size() == data_len;
     }
 
     function new (string name = "");

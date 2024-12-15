@@ -1,7 +1,7 @@
 //================================================================
 // Copyright (C) 2023 Dan. All rights reserved.
 // 
-// File Name   : spi_seuqencer.sv
+// File Name   : spi_sequencer.sv
 // Creator     : Dan
 // Create Date : 2023-09-03- 20:48:39
 // Description : 
@@ -11,9 +11,9 @@
 `ifndef SPI_SEQUENCER_SV
 `define SPI_SEQUENCER_SV
 
-class spi_seuqencer extends uvm_sequencer #(spi_transaction);
+class spi_sequencer extends uvm_sequencer #(spi_transaction);
 
-    `uvm_component_utils(spi_seuqencer)
+    `uvm_component_utils(spi_sequencer)
 
     function new (string        name   = " ", 
                   uvm_component parent = null

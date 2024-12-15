@@ -1,5 +1,5 @@
 //================================================================
-// Copyright (C) 2023 ICer. All rights reserved.
+// Copyright (C) 2023 Dan. All rights reserved.
 // 
 // File Name   : spi_scoreboard.sv
 // Creator     : Dan

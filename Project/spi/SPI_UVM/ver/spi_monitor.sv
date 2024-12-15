@@ -60,7 +60,7 @@ endtask:run_phase
 
 task spi_monitor::wr_collect_data();
     spi_transaction tr;
-    int num++;
+    int num;
     while(1) begin
         wait(this.mon_spi_if.csn == 0);
         tr = new();
@@ -87,7 +87,7 @@ endtask:wr_collect_data
 
 task spi_monitor::rd_collect_data();
     spi_transaction tr;
-    int num++;
+    int num;
     if(cfg.spi_rxfen_reg == 1) begin
         while(1) begin
             wait(this.mon_spi_if.csn == 0);

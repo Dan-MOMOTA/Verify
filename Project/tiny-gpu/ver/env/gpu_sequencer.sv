@@ -1,19 +1,19 @@
 //================================================================
-// Copyright (C) 2023 Dan. All rights reserved.
+// Copyright (C) 2024 Dan. All rights reserved.
 // 
-// File Name   : spi_seuqencer.sv
+// File Name   : gpu_sequencer.sv
 // Creator     : Dan
-// Create Date : 2023-09-03- 20:48:39
+// Create Date : 2024-12-15- 22:38:39
 // Description : 
 // 
 //================================================================
 
-`ifndef SPI_SEQUENCER_SV
-`define SPI_SEQUENCER_SV
+`ifndef GPU_SEQUENCER_SV
+`define GPU_SEQUENCER_SV
 
-class spi_seuqencer extends uvm_sequencer #(spi_transaction);
+class gpu_sequencer extends uvm_sequencer #(gpu_transaction);
 
-    `uvm_component_utils(spi_seuqencer)
+    `uvm_component_utils(gpu_sequencer)
 
     function new (string        name   = " ", 
                   uvm_component parent = null
@@ -23,17 +23,17 @@ class spi_seuqencer extends uvm_sequencer #(spi_transaction);
     extern virtual function void build_phase  (uvm_phase phase);
     extern virtual function void connect_phase(uvm_phase phase);
     extern virtual task          main_phase   (uvm_phase phase);
-endclass:spi_sequencer
+endclass:gpu_sequencer
 
-function void spi_sequencer::build_phase(uvm_phase phase);
+function void gpu_sequencer::build_phase(uvm_phase phase);
     super.build_phase(phase);
 endfunction:build_phase
 
-function void spi_sequencer::connect_phase(uvm_phase phase);
+function void gpu_sequencer::connect_phase(uvm_phase phase);
     super.connect_phase(phase);
 endfunction:connect_phase
 
-task spi_sequencer::main_phase(uvm_phase phase);
+task gpu_sequencer::main_phase(uvm_phase phase);
     super.main_phase(phase);
 endtask:main_phase
 

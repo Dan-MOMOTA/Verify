@@ -1,9 +1,9 @@
 //================================================================
-// Copyright (C) 2023 Dan. All rights reserved.
+// Copyright (C) 2024 Dan. All rights reserved.
 // 
 // File Name   : virtual_seuqencer.sv
 // Creator     : Dan
-// Create Date : 2023-09-03- 20:48:39
+// Create Date : 2024-12-15- 22:58:39
 // Description : 
 // 
 //================================================================
@@ -13,8 +13,8 @@
 
 class virtual_sequencer extends uvm_sequencer;
 
-    apb_sequencer apb_sqr;
-    spi_sequencer spi_sqr;
+    //apb_sequencer apb_sqr;
+    gpu_sequencer gpu_sqr;
     
     `uvm_component_utils(virtual_sequencer)
 

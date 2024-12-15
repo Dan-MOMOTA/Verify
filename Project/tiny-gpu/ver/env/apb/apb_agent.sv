@@ -27,7 +27,7 @@ class apb_agent extends uvm_agent;
     endfunction:new
     extern virtual function void build_phase  (uvm_phase phase);
     extern virtual function void connect_phase(uvm_phase phase);
-    extern virtual task          main_phase   (uvm_phase phase);
+    extern virtual task          run_phase    (uvm_phase phase);
 endclass:apb_agent
 
 function void apb_agent::build_phase(uvm_phase phase);
@@ -48,8 +48,8 @@ function void apb_agent::connect_phase(uvm_phase phase);
     rd_ap = apb_mon.rd_ap;
 endfunction:connect_phase
 
-task apb_agent::main_phase(uvm_phase phase);
-    super.main_phase(phase);
-endtask:main_phase
+task apb_agent::run_phase(uvm_phase phase);
+    super.run_phase(phase);
+endtask:run_phase
 
 `endif

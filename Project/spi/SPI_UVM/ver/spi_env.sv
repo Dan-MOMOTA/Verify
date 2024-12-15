@@ -92,7 +92,7 @@ function void spi_env::connect_phase(uvm_phase phase);
     scb.rd_act_port.connect(apb_agt_scb_fifo.blocking_get_export);   
 endfunction:connect_phase
 
-task api_env::main_phase(uvm_phase phase);
+task spi_env::main_phase(uvm_phase phase);
     super.main_phase(phase);
 endtask:main_phase
 

@@ -1,5 +1,5 @@
 //================================================================
-// Copyright (C) 2023 ICer. All rights reserved.
+// Copyright (C) 2023 Dan. All rights reserved.
 // 
 // File Name   : spi_cfg.sv
 // Creator     : Dan
@@ -102,10 +102,10 @@ class spi_cfg extends uvm_sequence_item;
             8'd1          :/plus::plus_spi_baudrate_min_wt,
             [8'd2:8'd127] :/plus::plus_spi_baudrate_mid_wt,
             8'd128        :/plus::plus_spi_baudrate_max_wt
-        }
+        };
     }
 
-    constraint intr_ena_reg
+    constraint intr_ena_reg_c
     {
         spi_endintr_ena_reg   == plus::plus_spi_endintr_ena_en   ; 
         spi_txfintr_ena_reg   == plus::plus_spi_txfintr_ena_en   ;
@@ -119,7 +119,7 @@ class spi_cfg extends uvm_sequence_item;
             100       :/plus::plus_spi_rxf_timeout_min_wt,
             [101:499] :/plus::plus_spi_rxf_timeout_mid_wt,
             500       :/plus::plus_spi_rxf_timeout_max_wt
-        }
+        };
     }
 
     function new (string name = "");

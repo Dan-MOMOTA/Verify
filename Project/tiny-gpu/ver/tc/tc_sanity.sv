@@ -1,23 +1,23 @@
 //================================================================
-// Copyright (C) 2023 ICer. All rights reserved.
+// Copyright (C) 2024 Dan. All rights reserved.
 // 
 // File Name   : tc_sanity.sv
 // Creator     : Dan
-// Create Date : 2023-09-03- 22:01:22
+// Create Date : 2024-12-15- 23:01:22
 // Description : 
 // 
 //================================================================
 
-`ifndef TC_SANITY__SV
-`define TC_SANITY__SV
+`ifndef TC_SANITY_SV
+`define TC_SANITY_SV
 
 class tc_sanity extends uvm_test;
 
-    spi_env       env     ;
+    gpu_env       env     ;
     plus          plus_arg;
 
-    ral_block_SPI   ral_model;
-    reg_apb_adapter reg_adpt ; 
+    //ral_block_SPI   ral_model;
+    //reg_apb_adapter reg_adpt ; 
 
     `uvm_component_utils(tc_sanity)
 
@@ -35,17 +35,17 @@ endclass:tc_sanity
 
 function void tc_sanity::build_phase(uvm_phase phase);
     super.build_phase(phase);
-    env = spi_env::type_id::create("env",this);
-    ral_model = ral_block_SPI::type_id::create("ral_model",this);
-    ral_model.configure(null,"");
-    ral_model.build();
-    ral_model.lock_model();
-    ral_model.reset();
-    ral_model.set_hdl_path_root("BACK_DOOR");//set 后门路径---从Verdi中copy到寄存器的model
+    env = gpu_env::type_id::create("env",this);
+    //ral_model = ral_block_SPI::type_id::create("ral_model",this);
+    //ral_model.configure(null,"");
+    //ral_model.build();
+    //ral_model.lock_model();
+    //ral_model.reset();
+    //ral_model.set_hdl_path_root("BACK_DOOR");//set 后门路径---从Verdi中copy到寄存器的model
 
-    reg_adpt = new("reg_adpt");
+    //reg_adpt = new("reg_adpt");
 
-    uvm_config_db#(ral_block_SPI)::set(null, "uvm_test_top.*","ral_model",ral_model);
+    //uvm_config_db#(ral_block_SPI)::set(null, "uvm_test_top.*","ral_model",ral_model);
     //1.Method No.1
     //uvm_config_db#(uvm_object_wrapper)::set(
     //                                        this,
@@ -57,17 +57,17 @@ endfunction:build_phase
 
 function void tc_sanity::connect_phase(uvm_phase phase);
     super.connect_phase(phase);
-    ral_model.default_map.set_sequencer(env.apb_agt.apb_sqr,reg_adpt);
-    ral_model.default_map.set_auto_predict(1);
+    //ral_model.default_map.set_sequencer(env.apb_agt.apb_sqr,reg_adpt);
+    //ral_model.default_map.set_auto_predict(1);
 endfunction:connect_phase
 
 task tc_sanity::main_phase(uvm_phase phase);
     //Method No.2
-    apb_cfg_sequence seq;
+    sanity_sequence seq;
     super.main_phase(phase);
-    seq = apb_cfg_sequence::type_id::create("seq");
+    seq = sanity_sequence::type_id::create("seq");
     seq.starting_phase = phase;
-    seq.start(this.env.apb_agt.apb_sqr);
+    seq.start(this.env.gpu_agt.gpu_sqr);
     phase.phase_done.set_drain_time(this,plus::plus_main_phase_drain_time);
 endtask:main_phase
 

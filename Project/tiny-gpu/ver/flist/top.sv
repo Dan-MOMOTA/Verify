@@ -123,14 +123,12 @@ module test_top();
     //tb i_tb(drv_reg_if,drv_data_if,mon_data_if,drv_gpu_if,mon_gpu_if);
 
     initial begin
-        //run_test();
-        # 100ns;
-        $finish(2);
+        run_test();
     end
     
     initial begin
-        //uvm_config_db#(virtual gpu_interface)::set(null, "uvm_test_top.env.gpu_agt.gpu_drv", "drv_gpu_if", drv_gpu_if);
-        //uvm_config_db#(virtual gpu_interface)::set(null, "uvm_test_top.env.gpu_agt.gpu_mon", "mon_gpu_if", mon_gpu_if);
+        uvm_config_db#(virtual gpu_interface)::set(null, "uvm_test_top.env.gpu_agt.gpu_drv", "drv_gpu_if", drv_gpu_if);
+        uvm_config_db#(virtual gpu_interface)::set(null, "uvm_test_top.env.gpu_agt.gpu_mon", "mon_gpu_if", mon_gpu_if);
     end
 
     //finish
@@ -138,17 +136,17 @@ module test_top();
         $timeformat(-9,3,"ns",8);
     end
 
-    initial begin
-        string name;
-        if($test$plusargs("WAV_DUMP")) begin
-            if($value$plusargs("tc_name=%s",name)) begin
-                $fsdbDumpfile({name,"fsdb"});
-                $fsdbDumpvars(0,test_top);
-                $fsdbDumpMDA();
-                $fsdbDumpSVA();
-            end
-        end
-    end
+    //initial begin
+    //    string name;
+    //    if($test$plusargs("WAV_DUMP")) begin
+    //        if($value$plusargs("tc_name=%s",name)) begin
+    //            $fsdbDumpfile({name,"fsdb"});
+    //            $fsdbDumpvars(0,test_top);
+    //            $fsdbDumpMDA();
+    //            $fsdbDumpSVA();
+    //        end
+    //    end
+    //end
 endmodule
 
 `endif

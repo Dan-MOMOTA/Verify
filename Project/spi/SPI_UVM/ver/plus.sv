@@ -43,7 +43,7 @@ class plus;
     `PLUS_ARGS_DEFINE(plus_spi_txfintr_ena_en,int,1)
     `PLUS_ARGS_DEFINE(plus_spi_rxfintr_ena_en,int,1)
     `PLUS_ARGS_DEFINE(plus_spi_rxftointr_ena_en,int,1)
-    `PLUS_ARGS_DEFINE(plus_spi_rxf_timeout_mid_wt,int,10)
+    `PLUS_ARGS_DEFINE(plus_spi_rxf_timeout_min_wt,int,10)
     `PLUS_ARGS_DEFINE(plus_spi_rxf_timeout_mid_wt,int,80)
     `PLUS_ARGS_DEFINE(plus_spi_rxf_timeout_max_wt,int,10)
     `PLUS_ARGS_DEFINE(plus_spi_wr_data_num,int,100)
