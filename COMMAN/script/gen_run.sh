@@ -23,13 +23,6 @@ if [[ ! -d sim ]]; then
         mkdir -pv sim/log/sim
     fi
 
-    if [[ ! -d sim/log ]]; then
-        mkdir -pv sim/wave
-        mkdir -pv sim/wave/fsdb
-        mkdir -pv sim/wave/vpb
-        mkdir -pv sim/wave/vcb
-    fi
-
     if [[ ! -d sim/cov ]]; then
         mkdir -pv sim/cov
         mkdir -pv sim/cov/cfg
@@ -38,7 +31,7 @@ if [[ ! -d sim ]]; then
 
     if [[ ! -d sim/wave ]]; then
         mkdir -pv sim/wave
-        mkdir -pv sim/wave/fddb
+        mkdir -pv sim/wave/fsdb
         mkdir -pv sim/wave/vpd
         mkdir -pv sim/wave/vcd
     fi

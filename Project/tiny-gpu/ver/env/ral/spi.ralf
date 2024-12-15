@@ -1,0 +1,117 @@
+register CTRL_REG {
+
+    field spi_rxthres (spi_ctrl_reg[21:16]) @'h10 {
+        bits    6;
+        reset   0;
+        access  rw;
+    }
+    field rsv_1 (spi_ctrl_reg[15:14]) @'he {
+        bits    2;
+        reset   0;
+        access  ro;
+    }
+    field spi_txthres (spi_ctrl_reg[13:8]) @'h8 {
+        bits    6;
+        reset   0;
+        access  rw;
+    }
+    field rsv_0 (spi_ctrl_reg[7]) @'h7 {
+        bits    1;
+        reset   0;
+        access  ro;
+    }
+    field spi_rxfen (spi_ctrl_reg[6]) @'h6 {
+        bits    1;
+        reset   0;
+        access  rw;
+    }
+    field spi_length (spi_ctrl_reg[5:4]) @'h4 {
+        bits    2;
+        reset   0;
+        access  rw;
+    }
+    field spi_lsb1st (spi_ctrl_reg[3]) @'h3 {
+        bits    1;
+        reset   0;
+        access  rw;
+    }
+    field spi_mode (spi_ctrl_reg[2:1]) @'h1 {
+        bits    2;
+        reset   0;
+        access  rw;
+    }
+    field spi_enable (spi_ctrl_reg[0]) @'h0 {
+        bits    1;
+        reset   0;
+        access  rw;
+    }
+}
+
+register STUS_REG {
+
+    field rsv_0 @'h24 {
+        bits    8;
+        reset   0;
+        access  ro;
+    }
+    field spi_rxem (spi_rxem_reg) @'h17 {
+        bits    1;
+        reset   1;
+        access  ro;
+    }
+    field spi_rxfu (spi_rxfu_reg) @'h16 {
+        bits    1;
+        reset   0;
+        access  ro;
+    }
+    field spi_rxf_num (spi_rxf_num_reg) @'h10 {
+        bits    5;
+        reset   0;
+        access  ro;
+    }
+    field spi_txem (spi_txem_reg) @'hf {
+        bits    1;
+        reset   1;
+        access  ro;
+    }
+    field spi_txfu (spi_txfu_reg) @'he {
+        bits    1;
+        reset   0;
+        access  ro;
+    }
+    field spi_txf_num (spi_txf_num_reg) @'h8 {
+        bits    5;
+        reset   0;
+        access  ro;
+    }
+    field rsv_1 @'h1 {
+        bits    6;
+        reset   0;
+        access  ro;
+    }
+    field spi_active (spi_active_reg) @'h0 {
+        bits    1;
+        reset   0;
+        access  ro;
+    }
+}
+
+    ......
+
+block SPI {
+
+    bytes 4;
+
+    register    CTRL_REG   @'h00;
+    register    STUS_REG   @'h04;
+        ......
+}
+
+system syst {
+
+    bytes 4;
+
+    block   SPI = SPI (top.u_apb_spi.u_spi_regfile) @'h0000;//后门路径
+}
+
+//命令：ralgen -t SPI -uvm -b spi.ralf
