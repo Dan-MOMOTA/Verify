@@ -76,12 +76,12 @@ module test_top();
     
     initial begin
         reset = 1'b1;
-        #($urandom_range(20,  200)) reset = 1'b0;
-        #($urandom_range(200, 500)) reset = 1'b1;
+        #($urandom_range(200,  2000)) reset = 1'b0;
+        #($urandom_range(2000, 5000)) reset = 1'b1;
     end
 
-    gpu_interface drv_gpu_if  (clk, reset);
-    gpu_interface mon_gpu_if  (clk, reset);
+    gpu_interface drv_gpu_if (clk, reset);
+    gpu_interface mon_gpu_if (clk, reset);
 
     //gpu drv
     assign start                        = drv_gpu_if.start                       ; 

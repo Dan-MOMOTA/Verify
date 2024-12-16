@@ -37,9 +37,14 @@ endclass:gpu_monitor
 
 function void gpu_monitor::build_phase(uvm_phase phase);
     super.build_phase(phase);
-    uvm_config_db#(virtual gpu_interface)::get(this, "", "mon_gpu_if", mon_if);
-    uvm_config_db#(gpu_cfg)::get(this, "", "cfg", cfg);//直线获取
-    //uvm_config_db#(gpu_cfg)::get(uvm_root::get(), "uvm_test_top.env.rm", "cfg", cfg);非直线获取
+    if(!uvm_config_db#(virtual gpu_interface)::get(this, "", "mon_gpu_if", mon_if)) begin
+        `uvm_fatal(get_type_name(),$sformatf("Interface get fail, please check the path."))
+    end
+
+    //if(!uvm_config_db#(gpu_cfg)::get(uvm_root::get(), "uvm_test_top.env.rm", "rm_mon_cfg", cfg)) begin //Non-linear acquisition
+    if(!uvm_config_db#(gpu_cfg)::get(this, "", "rm_mon_cfg", cfg)) begin //linear acquisition
+        //`uvm_fatal(get_type_name(),$sformatf("Cfg get fail, please check the path."))
+    end
     wr_ap = new("wr_ap",this);
     rd_ap = new("rd_ap",this);
 endfunction:build_phase

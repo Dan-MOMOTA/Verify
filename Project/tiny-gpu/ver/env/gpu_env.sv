@@ -50,7 +50,7 @@ function void gpu_env::build_phase(uvm_phase phase);
     //apb_agt.is_active = UVM_ACTIVE ;
 
     gpu_agt = gpu_agent::type_id::create("gpu_agt",this);
-    gpu_agt.is_active = UVM_PASSIVE ;//default: ACTIVE
+    gpu_agt.is_active = UVM_ACTIVE ;//default: ACTIVE
 
     rm      = gpu_rm::type_id::create("rm",this)          ;
     scb     = gpu_scoreboard::type_id::create("scb",this) ;

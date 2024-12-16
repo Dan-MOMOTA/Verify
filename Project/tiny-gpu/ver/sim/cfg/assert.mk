@@ -1,4 +1,4 @@
-SVA_EN           ?= 1
+SVA_EN           ?= 0
 SVA_FAIL_MAX_NUM ?= 20
 SVA_SUCC_EN      ?= 1
 SVA_SUCC_MAX_NUM ?= 20

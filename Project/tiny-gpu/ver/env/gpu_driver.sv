@@ -28,13 +28,15 @@ class gpu_driver extends uvm_driver #(gpu_transaction);
     extern virtual function void build_phase  (uvm_phase phase);
     extern virtual function void connect_phase(uvm_phase phase);
     extern virtual task          reset_phase  (uvm_phase phase);
-    extern virtual task          run_phase   (uvm_phase phase);
+    extern virtual task          run_phase    (uvm_phase phase);
     extern virtual task          send_data    ();
 endclass:gpu_driver
 
 function void gpu_driver::build_phase(uvm_phase phase);
     super.build_phase(phase);
-    uvm_config_db#(virtual gpu_interface)::get(this, "", "drv_gpu_if", drv_if);
+    if(!uvm_config_db#(virtual gpu_interface)::get(this, "", "drv_gpu_if", drv_if)) begin
+        `uvm_fatal(get_type_name(),$sformatf("Interface get fail, please check the path."))
+    end
     uvm_config_db#(gpu_cfg)::get(this, "", "cfg", cfg);
 endfunction:build_phase
 

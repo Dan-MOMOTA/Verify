@@ -41,7 +41,7 @@ sim:
 	@echo ""
 	@echo "+-----------------------------------------------------------------+"
 	@echo "+     Compile    log    :   ./log/cmp/cmp.log                     "
-	@echo "+     Simulation log    :   ./log/sim/${tc_full_name}.log         "
+	@echo "+     Simulation log    :   ./log/sim/${tc_full_name}.log      "
 	@echo "+     Coverage   check  :   dve -full64 -cov -dir ./cov/cm.vdb &  "
 	@echo "+-----------------------------------------------------------------+"
 	@echo ""

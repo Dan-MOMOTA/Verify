@@ -48,7 +48,8 @@ endclass:gpu_rm
 
 function void gpu_rm::build_phase(uvm_phase phase);
     super.build_phase(phase);
-    uvm_config_db#(gpu_cfg)::set(this, "","cfg",cfg);
+    //uvm_config_db#(gpu_cfg)::set(this, "","rm_mon_cfg",cfg);
+    uvm_config_db#(gpu_cfg)::set(null, "uvm_test_top.env.gpu_agt.gpu_mon","rm_mon_cfg",cfg);
     //wr_port = new("wr_port",this);
     wr_ap   = new("wr_ap",  this);
     rd_port = new("rd_port",this);
