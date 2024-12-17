@@ -8,6 +8,7 @@
 // 
 // Description:
 //             1. add add_space function
+//             2. add gen_date function
 //=================================================================
 
 function automatic string add_space(int space_num);
@@ -18,4 +19,18 @@ function automatic string add_space(int space_num);
         $sformat(s0, "%s%s", s0, space);
     end
     return s0;
-endfunction
+endfunction:add_space
+
+function int unsigned gen_date();
+    int unsigned date;
+    integer      fp  ;
+
+    void'($system("date > tmp"));
+    fp = $fopen("tmp", "r");
+    $fread(date, fp);
+    $fclose(fp);
+    void'($system("rm tmp"));
+    $display("Today is %0s.",date);
+
+    return date;
+endfunction:gen_date
