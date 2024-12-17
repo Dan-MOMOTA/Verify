@@ -13,7 +13,7 @@
 
 interface gpu_interface(
                         input  clk   ,
-                        input  reset
+                        input  rst
                        );
 
     logic                                start                                                   ; // input 

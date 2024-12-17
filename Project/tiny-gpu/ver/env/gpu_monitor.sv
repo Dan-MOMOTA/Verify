@@ -36,6 +36,7 @@ class gpu_monitor extends uvm_driver #(gpu_transaction);
 endclass:gpu_monitor
 
 function void gpu_monitor::build_phase(uvm_phase phase);
+    `uvm_info(get_type_name(),$sformatf("build_phase() START!"), UVM_MEDIUM)
     super.build_phase(phase);
     if(!uvm_config_db#(virtual gpu_interface)::get(this, "", "mon_gpu_if", mon_if)) begin
         `uvm_fatal(get_type_name(),$sformatf("Interface get fail, please check the path."))
@@ -55,12 +56,12 @@ endfunction:connect_phase
 
 task gpu_monitor::run_phase(uvm_phase phase);
     super.run_phase(phase);
-    `uvm_info(get_full_name,$sformatf("run_phase() START!"), UVM_MEDIUM)
-    fork
-        this.wr_collect_data();
-        this.rd_collect_data();
-    join_none
-    `uvm_info(get_full_name(),$sformatf("run_phase() DONE!"), UVM_MEDIUM)
+    `uvm_info(get_type_name(),$sformatf("run_phase() START!"), UVM_MEDIUM)
+    //fork
+    //    this.wr_collect_data();
+    //    this.rd_collect_data();
+    //join_none
+    `uvm_info(get_type_name(),$sformatf("run_phase() DONE!"), UVM_MEDIUM)
 endtask:run_phase
 
 task gpu_monitor::wr_collect_data();

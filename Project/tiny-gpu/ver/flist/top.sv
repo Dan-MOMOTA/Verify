@@ -16,7 +16,7 @@ module test_top();
     //1.Define Signal
     //system
     reg clk   ; 
-    reg reset ; 
+    reg rst ; 
 
     //gpu interface
     wire                                start                                                   ; // input 
@@ -41,7 +41,7 @@ module test_top();
     //instance DUT
     gpu u_pgu(
         .clk                         (clk                         ),
-        .reset                       (reset                       ),
+        .reset                       (rst                         ),
         .start                       (start                       ),
         .done                        (done                        ),
                                       
@@ -75,13 +75,13 @@ module test_top();
     end
     
     initial begin
-        reset = 1'b1;
-        #($urandom_range(200,  2000)) reset = 1'b0;
-        #($urandom_range(2000, 5000)) reset = 1'b1;
+        rst = 1'b0;
+        #($urandom_range(200,  2000)) rst = 1'b1;
+        #($urandom_range(2000, 5000)) rst = 1'b0;
     end
 
-    gpu_interface drv_gpu_if (clk, reset);
-    gpu_interface mon_gpu_if (clk, reset);
+    gpu_interface drv_gpu_if (clk, rst);
+    gpu_interface mon_gpu_if (clk, rst);
 
     //gpu drv
     assign start                        = drv_gpu_if.start                       ; 
@@ -123,10 +123,6 @@ module test_top();
     //tb i_tb(drv_reg_if,drv_data_if,mon_data_if,drv_gpu_if,mon_gpu_if);
 
     initial begin
-        run_test();
-    end
-    
-    initial begin
         uvm_config_db#(virtual gpu_interface)::set(null, "uvm_test_top.env.gpu_agt.gpu_drv", "drv_gpu_if", drv_gpu_if);
         uvm_config_db#(virtual gpu_interface)::set(null, "uvm_test_top.env.gpu_agt.gpu_mon", "mon_gpu_if", mon_gpu_if);
     end
@@ -136,6 +132,10 @@ module test_top();
         $timeformat(-9,3,"ns",8);
     end
 
+    initial begin
+        run_test();
+    end
+    
     //initial begin
     //    string name;
     //    if($test$plusargs("WAV_DUMP")) begin

@@ -33,6 +33,7 @@ class gpu_driver extends uvm_driver #(gpu_transaction);
 endclass:gpu_driver
 
 function void gpu_driver::build_phase(uvm_phase phase);
+    `uvm_info(get_type_name(),$sformatf("build_phase() START!"), UVM_MEDIUM)
     super.build_phase(phase);
     if(!uvm_config_db#(virtual gpu_interface)::get(this, "", "drv_gpu_if", drv_if)) begin
         `uvm_fatal(get_type_name(),$sformatf("Interface get fail, please check the path."))
@@ -41,14 +42,15 @@ function void gpu_driver::build_phase(uvm_phase phase);
 endfunction:build_phase
 
 function void gpu_driver::connect_phase(uvm_phase phase);
+    `uvm_info(get_type_name(),$sformatf("build_phase() START!"), UVM_MEDIUM)
     super.connect_phase(phase);
 endfunction:connect_phase
 
 task gpu_driver::reset_phase(uvm_phase phase);
-    `uvm_info(get_full_name,$sformatf("reset_phase() START!"), UVM_MEDIUM)
+    `uvm_info(get_type_name(),$sformatf("reset_phase() START!"), UVM_MEDIUM)
     super.reset_phase(phase);
     phase.raise_objection(this);
-    wait(this.drv_if.reset == 1);
+    wait(this.drv_if.rst == 1);
     this.drv_if.drv_cb.start                       <= 0;
     this.drv_if.drv_cb.device_control_write_enable <= 0;
     this.drv_if.drv_cb.device_control_data         <= 0;
@@ -57,20 +59,20 @@ task gpu_driver::reset_phase(uvm_phase phase);
     this.drv_if.drv_cb.data_mem_read_ready         <= 0;
     this.drv_if.drv_cb.data_mem_read_data          <= '{default:0};
     this.drv_if.drv_cb.data_mem_write_ready        <= 0;
-    wait(this.drv_if.reset == 0);
+    wait(this.drv_if.rst == 0);
     phase.drop_objection(this);
-    `uvm_info(get_full_name,$sformatf("reset_phase() DONE !"), UVM_MEDIUM)
+    `uvm_info(get_type_name(),$sformatf("reset_phase() DONE !"), UVM_MEDIUM)
 endtask:reset_phase
 
 task gpu_driver::run_phase(uvm_phase phase);
     super.run_phase(phase);
-    `uvm_info(get_full_name,$sformatf("run_phase() START!"), UVM_MEDIUM)
+    `uvm_info(get_type_name(),$sformatf("run_phase() START!"), UVM_MEDIUM)
     while(1)begin
         this.seq_item_port.get_next_item(req);
         send_data();
         this.seq_item_port.item_done;
     end
-    `uvm_info(get_full_name(),$sformatf("run_phase() DONE!"), UVM_MEDIUM)
+    `uvm_info(get_type_name(),$sformatf("run_phase() DONE!"), UVM_MEDIUM)
 endtask:run_phase
 
 task gpu_driver::send_data();

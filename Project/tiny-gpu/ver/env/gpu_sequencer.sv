@@ -26,6 +26,7 @@ class gpu_sequencer extends uvm_sequencer #(gpu_transaction);
 endclass:gpu_sequencer
 
 function void gpu_sequencer::build_phase(uvm_phase phase);
+    `uvm_info(get_type_name(),$sformatf("build_phase() START!"), UVM_MEDIUM)
     super.build_phase(phase);
 endfunction:build_phase
 

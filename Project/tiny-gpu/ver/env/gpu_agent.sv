@@ -29,10 +29,11 @@ class gpu_agent extends uvm_agent;
     endfunction:new
     extern virtual function void build_phase  (uvm_phase phase);
     extern virtual function void connect_phase(uvm_phase phase);
-    extern virtual task          run_phase   (uvm_phase phase);
+    extern virtual task          main_phase   (uvm_phase phase);
 endclass:gpu_agent
 
 function void gpu_agent::build_phase(uvm_phase phase);
+    `uvm_info(get_type_name(),$sformatf("build_phase() START!"), UVM_MEDIUM)
     super.build_phase(phase);
     if(is_active == UVM_ACTIVE)begin
         gpu_sqr = gpu_sequencer::type_id::create("gpu_sqr",this);
@@ -50,8 +51,8 @@ function void gpu_agent::connect_phase(uvm_phase phase);
     rd_ap = gpu_mon.rd_ap;
 endfunction:connect_phase
 
-task gpu_agent::run_phase(uvm_phase phase);
-    super.run_phase(phase);
-endtask:run_phase
+task gpu_agent::main_phase(uvm_phase phase);
+    super.main_phase(phase);
+endtask:main_phase
 
 `endif
