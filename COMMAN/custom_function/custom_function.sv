@@ -8,7 +8,8 @@
 // 
 // Description:
 //             1. add add_space function
-//             2. add gen_date function
+//             2. add get_day_of_the_week function
+//             2. add get_system_time function
 //=================================================================
 
 function automatic string add_space(int space_num);
@@ -21,11 +22,11 @@ function automatic string add_space(int space_num);
     return s0;
 endfunction:add_space
 
-function int unsigned gen_date();
+function int unsigned get_day_of_the_week();
     int unsigned date;
     integer      fp  ;
 
-    void'($system("date > tmp"));
+    void'($system("date +%a > tmp"));
     fp = $fopen("tmp", "r");
     $fread(date, fp);
     $fclose(fp);
@@ -33,4 +34,18 @@ function int unsigned gen_date();
     $display("Today is %0s.",date);
 
     return date;
-endfunction:gen_date
+endfunction:get_day_of_the_week
+
+function int unsigned get_system_time();
+    int unsigned date;
+    integer      fp  ;
+
+    void'($system("date +%s > tmp"));
+    fp = $fopen("tmp", "r");
+    $fscanf(fp, "%d" date);
+    $fclose(fp);
+    void'($system("rm tmp"));
+    $display("Now system time is %0s.",date);
+
+    return date;
+endfunction:get_system_time

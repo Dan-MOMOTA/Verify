@@ -125,6 +125,7 @@ clr:
 	@rm -rf xsim.dir
 	@rm -rf xvlog.pb
 	@rm -rf .__solver_cache__
+	@rm -rf .inter.vpd.uvm
 	@echo \"\"
 	@echo \"+-------------------------------------------+\"
 	@echo \"+            clean done ... ...             \"
