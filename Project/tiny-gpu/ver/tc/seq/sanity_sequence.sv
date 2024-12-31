@@ -15,6 +15,7 @@ class sanity_sequence extends uvm_sequence #(gpu_transaction);
     
     string        name;
     //ral_block_SPI ral_model;
+    uvm_phase p = get_starting_phase();
 
     gpu_cfg       cfg;
 
@@ -30,9 +31,10 @@ class sanity_sequence extends uvm_sequence #(gpu_transaction);
 endclass:sanity_sequence
 
 task sanity_sequence::pre_body();
+    super.pre_body();
     `uvm_info(get_full_name,$sformatf("pre_body() START!"), UVM_MEDIUM)
-    if(starting_phase != null)begin
-        starting_phase.raise_objection(this);    
+    if(p != null)begin
+        p.raise_objection(this);    
     end
 endtask:pre_body
 
@@ -46,6 +48,7 @@ task sanity_sequence::body();
     uvm_status_e status;
     bit [31:0] rdata;
 
+    super.body();
     uvm_config_db#(gpu_cfg)::get(null, get_full_name(),"cfg",cfg);
     #100000ns;
     `uvm_do(req);
@@ -65,9 +68,10 @@ task sanity_sequence::body();
 endtask:body
 
 task sanity_sequence::post_body();
+    super.post_body();
     `uvm_info(get_full_name,$sformatf("post_body() START!"), UVM_MEDIUM)
-    if(starting_phase != null)begin
-        starting_phase.drop_objection(this);    
+    if(p != null)begin
+        p.drop_objection(this);    
     end
 endtask:post_body
 

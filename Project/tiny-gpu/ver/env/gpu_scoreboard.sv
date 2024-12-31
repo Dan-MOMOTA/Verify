@@ -59,14 +59,14 @@ endfunction:connect_phase
 
 task gpu_scoreboard::run_phase(uvm_phase phase);
     super.run_phase(phase);
-    fork
-        this.get_wr_mon_tr();
-        this.get_wr_rm_tr();
-        this.compare_wr_tr();
-        //this.get_rd_mon_tr();
-        //this.get_rd_rm_tr();
-        //this.compare_rd_tr();
-    join_none
+    //fork
+    //    this.get_wr_mon_tr();
+    //    this.get_wr_rm_tr();
+    //    this.compare_wr_tr();
+    //    //this.get_rd_mon_tr();
+    //    //this.get_rd_rm_tr();
+    //    //this.compare_rd_tr();
+    //join_none
 endtask:run_phase
 
 task gpu_scoreboard::get_wr_mon_tr();

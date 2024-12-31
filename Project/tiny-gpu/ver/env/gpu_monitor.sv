@@ -11,7 +11,7 @@
 `ifndef GPU_MONITOR_SV
 `define GPU_MONITOR_SV
 
-class gpu_monitor extends uvm_driver #(gpu_transaction);
+class gpu_monitor extends uvm_monitor #(gpu_transaction);
     
     string                     name   ;
     virtual gpu_interface      mon_if ;

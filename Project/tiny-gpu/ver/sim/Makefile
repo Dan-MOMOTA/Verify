@@ -1,9 +1,12 @@
+####### Project dir #######
+### need to set $GPU_PRJ path
+
 CMP_OPTS   ?=
 SIM_OPTS   ?=
 VERDI_OPTS ?=
 DVE_OPTS   ?=
 
-TB_FILES    = ../flist/tb.f
+TB_FILES    = $(GPU_PRJ)/ver/flist/tb.f
 TOP_MODULE ?= test_top
 
 USER_DEF_CMP_OPTS += +define+NO_CHECK_TRF -debug_all
@@ -17,17 +20,17 @@ endif
 CPUS      = $(shell nproc)
 CMP_OPTS += -j${CPUS}
 
-include cfg/vlg.mk
-include cfg/macros.mk
-include cfg/lint.mk
-include cfg/dbg.mk
-include cfg/solver.mk
-include cfg/uvm.mk
-include cfg/timescale.mk
-include cfg/assert.mk
-include cfg/cov.mk
-include cfg/log.mk
-include cfg/dump.mk
+include $(GPU_PRJ)/ver/sim/cfg/vlg.mk
+include $(GPU_PRJ)/ver/sim/cfg/macros.mk
+include $(GPU_PRJ)/ver/sim/cfg/lint.mk
+include $(GPU_PRJ)/ver/sim/cfg/dbg.mk
+include $(GPU_PRJ)/ver/sim/cfg/solver.mk
+include $(GPU_PRJ)/ver/sim/cfg/uvm.mk
+include $(GPU_PRJ)/ver/sim/cfg/timescale.mk
+include $(GPU_PRJ)/ver/sim/cfg/assert.mk
+include $(GPU_PRJ)/ver/sim/cfg/cov.mk
+include $(GPU_PRJ)/ver/sim/cfg/log.mk
+include $(GPU_PRJ)/ver/sim/cfg/dump.mk
 
 .PHONY:all
 
@@ -74,6 +77,7 @@ clr:
 	@rm -rf xsim.dir
 	@rm -rf xvlog.pb
 	@rm -rf .__solver_cache__
+	@rm -rf .inter.vpd.uvm
 	@echo ""
 	@echo "+-------------------------------------------+"
 	@echo "+            clean done ... ...             "

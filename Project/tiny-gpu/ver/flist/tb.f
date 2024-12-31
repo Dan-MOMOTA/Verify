@@ -1,4 +1,4 @@
--F ../../src/rtl.f
--F ../../ver/env/ver.f
--F ../../ver/tc/tc.f
-../../ver/flist/top.sv
+-F $GPU_PRJ/src/rtl.f
+-F $GPU_PRJ/ver/env/ver.f
+-F $GPU_PRJ/ver/tc/tc.f
+$GPU_PRJ/ver/flist/top.sv
