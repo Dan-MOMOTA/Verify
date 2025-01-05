@@ -74,22 +74,22 @@ function void base_test::report_phase(uvm_phase phase);
 
     if(err_num == 0)begin
         $display("\n");
-        $display("+==========================+");
-        $display("|Simulation Result:PASSED!!|");
-        $display("+==========================+");
+        $display("+===============================+");
+        $display("| Simulation Result: PASSED !!! |");
+        $display("+===============================+");
         $display("._______      ___           _______.    _______.");
-        $display("|   _   \    /   \\         /       |   /       |");
+        $display("|   _   \\    /   \\         /       |   /       |");
         $display("|  |_)   |  /  ^  \\       |   (----`  |   (----`");
-        $display("|   ____/  /  /_\\  \\       \   \       \   \    ");
+        $display("|   ____/  /  /_\\  \\       \\   \\       \\   \\    ");
         $display("|  |      /  _____  \\  .----)   |  .----)   |   ");
         $display("| _|     /__/     \\__\\ |_______/   |_______/    ");
         $display("\n");
     end
     else begin
         $display("\n");
-        $display("+==========================+");
-        $display("|Simulation Result:FAILED!!|");
-        $display("+==========================+");
+        $display("+===============================+");
+        $display("| Simulation Result: FAILED !!! |");
+        $display("+===============================+");
         $display(" ________     ___       __   __      ");
         $display("|   _____|   /   \\     |  | |  |     ");
         $display("|  |____    /  ^  \\    |  | |  |     ");
