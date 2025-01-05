@@ -1,5 +1,6 @@
 SEED_MANUAL  ?= 1
-seed         ?= $(shell date "+%m%d%H%M%S")
+seed         ?= 1
+#seed         ?= $(shell date "+%m%d%H%M%S")
 
 ifeq (${SEED_MANUAL},1)
     SIM_OPTS += ntb_random_seed=${seed}

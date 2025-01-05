@@ -73,8 +73,8 @@ module test_top();
     
     initial begin
         rst_n = 1'b1;
-        #($urandom_range(200,  2000)) rst_n = 1'b0;
-        #($urandom_range(2000, 5000)) rst_n = 1'b1;
+        #($urandom_range(5000, 9000)) rst_n = 1'b0;
+        #($urandom_range(5000, 9000)) rst_n = 1'b1;
     end
 
     apb_interface  drv_apb_if  (clk, rst_n);

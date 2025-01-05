@@ -19,7 +19,7 @@
         $display("+name=format",name);
 
 class plus;
-    `PLUS_ARGS_DEFINE(plus_main_phase_drain_time,int,5000000)
+    `PLUS_ARGS_DEFINE(plus_main_phase_drain_time,int,10000)
     extern function new();
 endclass:plus
         

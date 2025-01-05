@@ -44,11 +44,10 @@ task seq_sanity::body();
     super.body();
     `uvm_info("seq_sanity",$sformatf("body() Enter..."), UVM_MEDIUM)
     //super.body();
-    #100000ns;
-    //req.print();
-    //`uvm_do(req);
-    `uvm_do(apb_trans);
-    apb_trans.print();
+    #10000ns;
+    repeat(10) begin
+        `uvm_do(req);
+    end
     `uvm_info("seq_sanity",$sformatf("body() Exit..."), UVM_MEDIUM)
 endtask:body
 

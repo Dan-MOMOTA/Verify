@@ -51,10 +51,13 @@ task apb_driver::reset_phase(uvm_phase phase);
 endtask:reset_phase
 
 task apb_driver::main_phase(uvm_phase phase);
+    int num;
+
     `uvm_info(get_type_name(),"main_phase Enter...",UVM_MEDIUM)
     super.main_phase(phase);
     while(1)begin
         this.seq_item_port.get_next_item(req);
+        `uvm_info(get_type_name(),$sformatf("=== No.%0d ===\n%p", num++, req.print()),UVM_MEDIUM)
         send_data();
         this.seq_item_port.item_done;
     end
@@ -75,12 +78,13 @@ task apb_driver::send_data();
         begin
             do
                 @drv_if.drv_cb;
-            while (drv_if.PREADY == 1'b0);
+            while(drv_if.PREADY == 1'b0 && drv_if.PSLVERR);
             if(req.pwrite == 0) begin // read
                 req.data = drv_if.drv_cb.PRDATA;
             end
         end
     join
+
     @drv_if.drv_cb;
     drv_if.drv_cb.PSEL[0] <= 0;
     drv_if.drv_cb.PENABLE <= 0;

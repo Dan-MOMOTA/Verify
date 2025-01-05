@@ -13,6 +13,8 @@
 `ifndef APB_UART_ENUM_SV
 `define APB_UART_ENUM_SV
 
-
+typedef enum bit {APB_READ  = 0, 
+                  APB_WRITE = 1
+                 } pwrite_e; 
 
 `endif 
