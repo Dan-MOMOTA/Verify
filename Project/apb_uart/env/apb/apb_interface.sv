@@ -33,6 +33,7 @@ interface apb_interface #(type ADDR = logic [`APB_ADDR_WIDTH-1:0],
     logic        PSLVERR ; 
     
     clocking drv_cb @(posedge PCLK);
+        default input #1ns output #0ns;
         output PADDR   ; 
         output PWDATA  ; 
         output PSEL    ; 

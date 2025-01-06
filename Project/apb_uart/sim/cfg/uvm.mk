@@ -10,7 +10,7 @@ UVM_RESOURCE_TRACE_EN   ?= 0
 UVM_CONFIG_DB_TRACE_EN  ?= 0
 
 tc      ?=tc_sanity
-vl      ?=
+vl      ?=UVM_HIGH
 qc      ?=
 to      ?= 5000000000
 

@@ -34,10 +34,10 @@ include cfg/dump.mk
 all:cmp sim
 
 cmp:
-	vcs -V -top ${TOP_MODULE} ${CMP_OPTS} ${USER_DEF_CMP_OPTS} -f ${TB_FILES}
+	@vcs -V -top ${TOP_MODULE} ${CMP_OPTS} ${USER_DEF_CMP_OPTS} -f ${TB_FILES}
 
 sim:
-	./simv ${SIM_OPTS} ${USER_DEF_SIM_OPTS}
+	@./simv ${SIM_OPTS} ${USER_DEF_SIM_OPTS}
 	@echo ""
 	@echo "+-----------------------------------------------------------------+"
 	@echo "+     Compile    log    :   ./log/cmp/cmp.log                     "
@@ -48,7 +48,7 @@ sim:
 
 wav:
 	#verdi -sv -ntb_opts uvm-${UVM_VER} -ssf ${WAVE_DIR}/${tc_full_name}.fsdb -nologo -f ${TB_FILES} -ptrTitle ${TOP_MODULE} &
-	verdi -sv -ntb_opts uvm-${UVM_VER} -nologo -f ${TB_FILES} -ptrTitle ${TOP_MODULE} &
+	@verdi -sv -ntb_opts uvm-${UVM_VER} -nologo -f ${TB_FILES} -ptrTitle ${TOP_MODULE} &
 
 cov_verdi:
 	verdi -cov -covdir ${COV_DIR}/${TOP_MODULE}.vdb

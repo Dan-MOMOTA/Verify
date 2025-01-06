@@ -28,6 +28,7 @@ class apb_monitor extends uvm_monitor;
     endfunction:new
     extern virtual function void build_phase   (uvm_phase phase);
     extern virtual task          main_phase    (uvm_phase phase);
+    extern virtual task          collect_data  ();
 endclass:apb_monitor
 
 function void apb_monitor::build_phase(uvm_phase phase);
@@ -43,11 +44,41 @@ endfunction:build_phase
 task apb_monitor::main_phase(uvm_phase phase);
     `uvm_info(get_type_name(),"main_phase Enter...",UVM_MEDIUM)
     super.main_phase(phase);
-    //fork
-    //    this.wr_collect_data();
-    //    this.rd_collect_data();
-    //join_none
+    fork
+        this.collect_data();
+    join_none
     `uvm_info(get_type_name(),"main_phase Exit ...",UVM_MEDIUM)
 endtask:main_phase
+
+task apb_monitor::collect_data();
+    int num;
+    apb_transaction tr;
+    //byte unsigned data_q[];
+
+    forever begin
+        tr = apb_transaction::type_id::create("tr");
+        //if(mon_if.mon_cb.PREADY  && mon_if.mon_cb.PSLVERR && mon_if.mon_cb.PSEL[0]) begin
+        if(mon_if.mon_cb.PREADY  && mon_if.mon_cb.PSEL[0]) begin
+            tr.paddr  = mon_if.mon_cb.PADDR ;
+            tr.pwrite = mon_if.mon_cb.PWRITE;
+            if(mon_if.mon_cb.PWRITE) begin
+                tr.data = mon_if.mon_cb.PWDATA;
+            end
+            else begin
+                tr.data = mon_if.mon_cb.PRDATA;
+            end
+            //if((tr.paddr[7:0] == 0) && (tr.pwrite == 1))
+            //    tr.print();
+            //Send to subscribers
+            `uvm_info(get_type_name(),$sformatf("=== No.%0d === \n%s", ++num, tr.sprint()),UVM_HIGH)
+            ap.write(tr);
+            //tr.pack_bytes(data_q);
+            //`uvm_info(get_type_name(),$sformatf("=== No.%0p === ", data_q),UVM_HIGH)
+            //tr.unpack_bytes(data_q);
+            //`uvm_info(get_type_name(),$sformatf("=== No.%0p === ", data_q),UVM_HIGH)
+        end
+        @mon_if.mon_cb;
+    end
+endtask:collect_data
 
 `endif 

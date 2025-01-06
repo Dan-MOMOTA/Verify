@@ -57,7 +57,7 @@ task apb_driver::main_phase(uvm_phase phase);
     super.main_phase(phase);
     while(1)begin
         this.seq_item_port.get_next_item(req);
-        `uvm_info(get_type_name(),$sformatf("=== No.%0d ===\n%p", num++, req.print()),UVM_MEDIUM)
+        `uvm_info(get_type_name(),$sformatf("=== No.%0d === \n%s", ++num, req.sprint()),UVM_HIGH)
         send_data();
         this.seq_item_port.item_done;
     end
@@ -65,6 +65,7 @@ task apb_driver::main_phase(uvm_phase phase);
 endtask:main_phase
 
 task apb_driver::send_data();
+    //@drv_if.drv_cb;
     drv_if.drv_cb.PSEL[0] <= 1;
     drv_if.drv_cb.PADDR   <= req.paddr;
     drv_if.drv_cb.PWDATA  <= req.data;
@@ -78,7 +79,8 @@ task apb_driver::send_data();
         begin
             do
                 @drv_if.drv_cb;
-            while(drv_if.PREADY == 1'b0 && drv_if.PSLVERR);
+            //while(drv_if.PREADY == 1'b0 && drv_if.PSLVERR == 1'b0);
+            while(drv_if.PREADY == 1'b0);
             if(req.pwrite == 0) begin // read
                 req.data = drv_if.drv_cb.PRDATA;
             end
