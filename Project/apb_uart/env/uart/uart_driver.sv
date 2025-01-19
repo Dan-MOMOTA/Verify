@@ -1,23 +1,23 @@
 //=================================================================
 //Copyright (C) 2025 MOMOTA Micro-electronics. All rights reserved.
 // 
-// File Name   :apb_driver.sv
+// File Name   :uart_driver.sv
 // Creater     :Dan
-// Create Date :2025-01-02 23:49:06
+// Create Date :2025-01-19 22:23:47
 // Modification History:
 // 
 // Description:
 // 
 //=================================================================
 
-`ifndef APB_DRIVER_SV
-`define APB_DRIVER_SV
+`ifndef UART_DRIVER_SV
+`define UART_DRIVER_SV
 
-class apb_driver extends uvm_driver #(apb_transaction);
+class uart_driver extends uvm_driver #(uart_transaction);
 
-    virtual apb_interface drv_if ;
+    virtual uart_interface drv_if ;
 
-    `uvm_component_utils(apb_driver)
+    `uvm_component_utils(uart_driver)
 
     function new (string        name   = " ",
                   uvm_component parent = null
@@ -28,29 +28,29 @@ class apb_driver extends uvm_driver #(apb_transaction);
     extern virtual task          reset_phase  (uvm_phase phase);
     extern virtual task          main_phase   (uvm_phase phase);
     extern virtual task          send_data    ();
-endclass:apb_driver
+endclass:uart_driver
 
-function void apb_driver::build_phase(uvm_phase phase);
+function void uart_driver::build_phase(uvm_phase phase);
     `uvm_info(get_type_name(),"build_phase Enter...",UVM_MEDIUM)
     super.build_phase(phase);
-    if(!uvm_config_db#(virtual apb_interface)::get(this, "", "drv_apb_if", drv_if)) begin
+    if(!uvm_config_db#(virtual uart_interface)::get(this, "", "drv_uart_if", drv_if)) begin
         `uvm_fatal(get_type_name(),$sformatf("Interface get fail, please check the path."))
     end
     `uvm_info(get_type_name(),"build_phase Exit ...",UVM_MEDIUM)
 endfunction:build_phase
 
-task apb_driver::reset_phase(uvm_phase phase);
+task uart_driver::reset_phase(uvm_phase phase);
     `uvm_info(get_type_name(),"reset_phase Enter...",UVM_MEDIUM)
     super.reset_phase(phase);
     phase.raise_objection(this);
-    wait(this.drv_if.PRESETn == 0);
+    wait(this.drv_if.rst_n == 0);
     this.drv_if.reset(get_type_name());
-    wait(this.drv_if.PRESETn == 0);
+    wait(this.drv_if.rst_n == 0);
     phase.drop_objection(this);
     `uvm_info(get_type_name(),"reset_phase Exit ...",UVM_MEDIUM)
 endtask:reset_phase
 
-task apb_driver::main_phase(uvm_phase phase);
+task uart_driver::main_phase(uvm_phase phase);
     int num;
 
     `uvm_info(get_type_name(),"main_phase Enter...",UVM_MEDIUM)
@@ -64,33 +64,8 @@ task apb_driver::main_phase(uvm_phase phase);
     `uvm_info(get_type_name(),"main_phase Exit ...",UVM_MEDIUM)
 endtask:main_phase
 
-task apb_driver::send_data();
-    //@drv_if.drv_cb;
-    drv_if.drv_cb.PSEL[0] <= 1;
-    drv_if.drv_cb.PADDR   <= req.paddr;
-    drv_if.drv_cb.PWDATA  <= req.data;
-    drv_if.drv_cb.PWRITE  <= req.pwrite;
-
-    fork
-        begin
-            @drv_if.drv_cb;
-            drv_if.drv_cb.PENABLE <= 1;
-        end
-        begin
-            do
-                @drv_if.drv_cb;
-            //while(drv_if.PREADY == 1'b0 && drv_if.PSLVERR == 1'b0);
-            while(drv_if.PREADY == 1'b0);
-            if(req.pwrite == 0) begin // read
-                req.data = drv_if.drv_cb.PRDATA;
-            end
-        end
-    join
-
-    @drv_if.drv_cb;
-    drv_if.drv_cb.PSEL[0] <= 0;
-    drv_if.drv_cb.PENABLE <= 0;
-    drv_if.drv_cb.PADDR   <= 0;		
+task uart_driver::send_data();
+    #100ns;
 endtask:send_data
 
 `endif 

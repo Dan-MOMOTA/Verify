@@ -20,6 +20,12 @@ interface uart_interface(input clk  ,
     logic TXD    ; 
     logic IRQ    ; 
     logic baud_o ; 
+
+    task reset(string name);
+        `uvm_info("[UART_INTF]",$sformatf("%s call reset",name),UVM_MEDIUM)
+        RXD <= 0;
+    endtask:reset
+
 endinterface
 
 `endif 

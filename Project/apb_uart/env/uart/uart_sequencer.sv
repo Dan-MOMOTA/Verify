@@ -1,25 +1,21 @@
 //=================================================================
 //Copyright (C) 2025 MOMOTA Micro-electronics. All rights reserved.
 // 
-// File Name   :blk_env.sv
+// File Name   :uart_sequencer.sv
 // Creater     :Dan
-// Create Date :2025-01-04 19:17:48
+// Create Date :2025-01-19 22:36:31
 // Modification History:
 // 
 // Description:
 // 
 //=================================================================
 
-`ifndef BLK_ENV_SV
-`define BLK_ENV_SV
+`ifndef UART_SEQUENCER_SV
+`define UART_SEQUENCER_SV
 
-class blk_env extends uvm_env;
+class uart_sequencer extends uvm_sequencer #(uart_transaction);
 
-    apb_agent  apb_agt;
-    uart_agent uart_rx_agt;
-    uart_agent uart_tx_agt;
-
-    `uvm_component_utils(blk_env)
+    `uvm_component_utils(uart_sequencer)
 
     function new (string        name   = " ",
                   uvm_component parent = null
@@ -28,25 +24,25 @@ class blk_env extends uvm_env;
     endfunction:new
     extern virtual function void build_phase   (uvm_phase phase);
     extern virtual function void connect_phase (uvm_phase phase);
-endclass:blk_env
+    extern virtual task          main_phase    (uvm_phase phase);
+endclass:uart_sequencer
 
-function void blk_env::build_phase(uvm_phase phase);
+function void uart_sequencer::build_phase(uvm_phase phase);
     `uvm_info(get_type_name(),"build_phase Enter...",UVM_MEDIUM)
     super.build_phase(phase);
-    apb_agt     = apb_agent::type_id::create("apb_agt", this);
-    uart_rx_agt = uart_agent::type_id::create("uart_rx_agt", this);
-    uart_tx_agt = uart_agent::type_id::create("uart_tx_agt", this);
-    apb_agt.is_active     = UVM_ACTIVE;
-    uart_rx_agt.is_active = UVM_ACTIVE;
-    uart_tx_agt.is_active = UVM_PASSIVE;
     `uvm_info(get_type_name(),"build_phase Exit ...",UVM_MEDIUM)
 endfunction:build_phase
 
-function void blk_env::connect_phase(uvm_phase phase);
+function void uart_sequencer::connect_phase(uvm_phase phase);
     `uvm_info(get_type_name(),"connect_phase Enter...",UVM_MEDIUM)
     super.connect_phase(phase);
-    // FIFO
     `uvm_info(get_type_name(),"connect_phase Exit ...",UVM_MEDIUM)
 endfunction:connect_phase
+
+task uart_sequencer::main_phase(uvm_phase phase);
+    `uvm_info(get_type_name(),"main_phase Enter...",UVM_MEDIUM)
+    super.main_phase(phase);
+    `uvm_info(get_type_name(),"main_phase Exit ...",UVM_MEDIUM)
+endtask:main_phase
 
 `endif 

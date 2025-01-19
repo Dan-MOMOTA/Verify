@@ -21,6 +21,13 @@ package uart_pkg;
 
     import tb_pkg::*;
 
+    `include "uart_transaction.sv"
+    `include "uart_uart_driver.sv"
+    `include "uart_uart_sequencer.sv"
+    `include "uart_uart_rx_monitor.sv"
+    `include "uart_uart_tx_monitor.sv"
+    `include "uart_uart_agent.sv"
+
     //`include "uart_seq_item.svh"
     //`include "uart_agent_configuration.svh"
     //`include "uart_sequencer.svh"

@@ -86,8 +86,9 @@ module test_top();
     initial begin
         uvm_config_db#(virtual apb_interface)::set(null, "uvm_test_top.env.apb_agt.apb_drv", "drv_apb_if", drv_apb_if);
         uvm_config_db#(virtual apb_interface)::set(null, "uvm_test_top.env.apb_agt.apb_mon", "mon_apb_if", mon_apb_if);
-        uvm_config_db#(virtual uart_interface)::set(null, "uvm_test_top.env.uart_agt.uart_drv", "drv_uart_if", drv_uart_if);
-        uvm_config_db#(virtual uart_interface)::set(null, "uvm_test_top.env.uart_agt.uart_mon", "mon_uart_if", mon_uart_if);
+        uvm_config_db#(virtual uart_interface)::set(null, "uvm_test_top.env.uart_rx_agt.uart_drv", "drv_uart_if", drv_uart_if);
+        uvm_config_db#(virtual uart_interface)::set(null, "uvm_test_top.env.uart_rx_agt.uart_rx_mon", "mon_uart_if", mon_uart_if);
+        uvm_config_db#(virtual uart_interface)::set(null, "uvm_test_top.env.uart_tx_agt.uart_tx_mon", "mon_uart_if", mon_uart_if);
     end
 
     //finish

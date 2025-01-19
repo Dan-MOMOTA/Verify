@@ -20,7 +20,7 @@ interface apb_interface #(type ADDR = logic [`APB_ADDR_WIDTH-1:0],
                           type DATA = logic [`APB_DATA_WIDTH-1:0],
                           type SEL  = logic [`APB_SEL_WIDTH-1:0]
                          )
-	                 (input PCLK,
+	                     (input PCLK,
                           input PRESETn
                          );
     ADDR         PADDR   ; 
