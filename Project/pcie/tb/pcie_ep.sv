@@ -52,7 +52,7 @@ module pcie_ep #(
     input refclk_p,
     input refclk_n,
 
-    // AXI msdter write request
+    // AXI master write request
     output [MSTR_ID_WD-1:0]        mstr_awid    , 
     output                         mstr_awvalid , 
     output [MSTR_ADDR_WD-1:0]      mstr_awaddr  , 
@@ -229,6 +229,9 @@ module pcie_ep #(
     output core_rst_n
 );
 
+parameter DEVICE_INDEX    = 0;
+parameter PHY_NB          = `CX_PHY_NB;
+`ifdef RADM_SEG_BUF
 
     `SNPS_PCIE_IIP_SUBSYS_MODULE u_pcie_iip_device(
         .power_up_rst_n                   (reset_n) , // input 
